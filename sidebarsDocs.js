@@ -460,6 +460,23 @@ const sidebars = {
           label: 'Policies and Runtime Parameters',
         },
         {
+          type: 'category',
+          label: 'Metadata store',
+          link: {type: 'doc', id: 'metadata-store/index'},
+          items: [
+            {
+              type: 'doc',
+              id: 'metadata-store/enabling-khepri',
+              label: 'Enabling Khepri',
+            },
+            {
+              type: 'doc',
+              id: 'metadata-store/clustering',
+              label: 'Clustering and Khepri',
+            },
+          ],
+        },
+        {
           type: 'doc',
           id: 'definitions',
           label: 'Schema Definitions',
