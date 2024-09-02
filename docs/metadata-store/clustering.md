@@ -46,19 +46,35 @@ rabbitmqctl start_app
 
 ## Caveats
 
-Because of the use of the Raft consensus algorithm, changing the cluster with
-Khepri has some constraints to keep in mind:
+Because of the use of the Raft consensus algorithm, you need to keep in mind
+that all operations that involve an update to the metadata store — and
+sometimes even queries — require that a quorum number of nodes are available.
 
-* There must be a quorum number of nodes available to validate the change
-* A single node can be added or removed at a time
+### Restarting a cluster member
+
+When a cluster member is restarted or stopped, the remaining nodes may not
+form a quorum anymore. This may affect the ability to start a node.
+
+For example, in a cluster of e.g. 5 nodes where all nodes are stopped, the
+first two starting nodes will wait for a third node to start before completing
+their boot and start serving messages. That’s because the metadata store needs
+at least 3 node in this example to elect a leader and finich to initialize its
+state to a known good one. In the meantime the first two nodes wait and may
+time out if the third one does not appear.
+
+### Adding or removing a cluster member
+
+Likewise, there must be a Raft leader and thus a quorum number of nodes to
+validate and commit any change to the cluster membership, whether a member is
+added or removed. Again, the operation will time out if that condition is not
+met.
 
 Here is an example of a node joining a 4-node cluster with 3 stopped nodes:
 ```
-rabbitmqctl -n e@giotto join_cluster d@giotto
-```
-```
+# rabbitmqctl -n rabbit@host-5 join_cluster rabbit@host-4
+
 Error:
-Khepri has timed out on node e@giotto.
+Khepri has timed out on node rabbit@host-5.
 Khepri cluster could be in minority.
 ```
 

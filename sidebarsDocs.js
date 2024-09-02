@@ -474,6 +474,11 @@ const sidebars = {
               id: 'metadata-store/clustering',
               label: 'Clustering and Khepri',
             },
+            {
+              type: 'doc',
+              id: 'metadata-store/daily-use',
+              label: 'Daily use with Khepri',
+            },
           ],
         },
         {
