@@ -52,6 +52,13 @@ Khepri has some constraints to keep in mind:
 * There must be a quorum number of nodes available to validate the change
 * A single node can be added or removed at a time
 
-Example of a node joining a cluster with stopped nodes
+Here is an example of a node joining a 4-node cluster with 3 stopped nodes:
+```
+rabbitmqctl -n e@giotto join_cluster d@giotto
+```
+```
+Error:
+Khepri has timed out on node e@giotto.
+Khepri cluster could be in minority.
+```
 
-Example of a node leaving a clister with stopped nodes
